@@ -2,13 +2,18 @@
 #include <vector>
 #include <algorithm>
 #include <cassert>
+#include <cstring>
+
 #include "StringMisc.h"
 #include "misc.h"
-
 #include "Hunk.h"
 #include "NameMangling.h"
 #include "Log.h"
 #include "Symbol.h"
+
+#ifndef WIN32
+#define sscanf_s sscanf
+#endif
 
 using namespace std;
 

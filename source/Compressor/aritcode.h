@@ -3,7 +3,16 @@
 #define _ARITCODE_H_
 
 #include <cassert>
+#ifdef WIN32
 #include <intrin.h>
+#else
+#include <x86intrin.h>
+static inline void _BitScanReverse(uint32_t *index, uint32_t mask) {
+	const int leading_bits = __builtin_clz(mask);
+	*index = 1 << (32 - leading_bits);
+}
+#define __cdecl
+#endif
 
 static const int TABLE_BIT_PRECISION_BITS = 12;
 static const int TABLE_BIT_PRECISION = 1 << TABLE_BIT_PRECISION_BITS;
@@ -34,8 +43,8 @@ inline int AritSize2(int right_prob, int wrong_prob) {
 	if(total_prob < TABLE_BIT_PRECISION) {
 		return LogTable[total_prob] - LogTable[right_prob];
 	}
-	_BitScanReverse((unsigned long*)&right_len, right_prob);
-	_BitScanReverse((unsigned long*)&total_len, total_prob);
+	_BitScanReverse((unsigned*)&right_len, right_prob);
+	_BitScanReverse((unsigned*)&total_len, total_prob);
 	right_len = right_len > 12 ? (right_len - 12) : 0;
 	total_len = total_len > 12 ? (total_len - 12) : 0;
 	return LogTable[total_prob >> total_len] - LogTable[right_prob >> right_len] + ((total_len - right_len) << 12);

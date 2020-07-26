@@ -4,6 +4,7 @@
 #include "Symbol.h"
 #include <vector>
 #include <algorithm>
+#include <cstring>
 
 using namespace std;
 

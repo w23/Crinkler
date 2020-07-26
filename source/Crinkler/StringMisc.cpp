@@ -1,5 +1,10 @@
 #include "StringMisc.h"
 #include <algorithm>
+#include <cstring>
+
+#ifndef WIN32
+#define sprintf_s snprintf
+#endif
 
 using namespace std;
 

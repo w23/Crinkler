@@ -3,6 +3,7 @@
 #include <cassert>
 #include <stack>
 #include <algorithm>
+#include <cstring>
 
 #include "Hunk.h"
 #include "Log.h"

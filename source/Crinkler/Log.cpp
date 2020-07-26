@@ -1,7 +1,6 @@
 #include <cstdio>
 #include <cstdarg>
 #include <cstdlib>
-#include <windows.h>
 #include "Log.h"
 
 void Log::Warning(const char* from, const char* msg, ...) {

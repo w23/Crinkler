@@ -13,7 +13,9 @@
 #include "Transform.h"
 #include "StringMisc.h"
 #include "ConsoleProgressBar.h"
+#ifdef WIN32
 #include "WindowProgressBar.h"
+#endif
 #include "CompositeProgressBar.h"
 #include "Export.h"
 #include "Reuse.h"
@@ -73,7 +75,9 @@ class Crinkler {
 	ModelList1k							m_modellist1k;
 
 	ConsoleProgressBar					m_consoleBar;
+#ifdef WIN32
 	WindowProgressBar					m_windowBar;
+#endif
 	CompositeProgressBar				m_progressBar;
 
 	Symbol*	FindEntryPoint();

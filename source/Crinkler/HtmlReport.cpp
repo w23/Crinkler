@@ -13,6 +13,11 @@
 #include "StringMisc.h"
 #include "../../external/distorm/distorm.h"
 
+#ifndef WIN32
+#define sprintf_s snprintf
+#define sscanf_s sscanf
+#endif
+
 using namespace std;
 
 static const char* htmlHeader1 =
@@ -712,9 +717,14 @@ void HtmlReport(CompressionReportRecord* csr, const char* filename, Hunk& hunk, 
 	
 	map<int, Symbol*> relocs = hunk.GetOffsetToRelocationMap();
 	map<int, Symbol*> symbols = hunk.GetOffsetToSymbolMap();
-	FILE* out;
 	map<string, int> opcodeCounters;
+#ifdef WIN32
+	FILE* out;
 	if(fopen_s(&out, filename, "wb")) {
+#else
+	FILE* out = fopen(filename, "wb");
+	if (!out) {
+#endif
 		Log::Error(filename, "Cannot open file for writing");
 		return;
 	}

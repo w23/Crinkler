@@ -2,15 +2,13 @@
 #ifndef _COMPRESSOR_H_
 #define _COMPRESSOR_H_
 
-#include "AritCode.h"
+#include "aritcode.h"
 #include "CompressionStream.h"
 #include "ModelList.h"
 
 static const int MAX_CONTEXT_LENGTH =	8;		// Maximum size of context window
 static const int DEFAULT_BASEPROB	=	10;		// Default weight for trivial model
 static const int BIT_PRECISION		=	256;	// Number of units per bit
-
-enum CompressionType {COMPRESSION_INSTANT, COMPRESSION_FAST, COMPRESSION_SLOW, COMPRESSION_VERYSLOW};
 
 typedef void	(ProgressCallback)(void* userData, int value, int max);
 

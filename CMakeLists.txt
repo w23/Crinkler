@@ -1,0 +1,70 @@
+cmake_minimum_required(VERSION 3.10)
+project(Crinkler)
+
+set (CMAKE_CXX_STANDARD 11)
+
+add_executable(crinkler
+	source/Crinkler/CallTransform.cpp
+	source/Crinkler/CallTransform.h
+	source/Crinkler/CmdLineInterface
+	source/Crinkler/CoffLibraryLoader.cpp
+	source/Crinkler/CoffLibraryLoader.h
+	source/Crinkler/CoffObjectLoader.cpp
+	source/Crinkler/CoffObjectLoader.h
+	source/Crinkler/CompositeProgressBar.cpp
+	source/Crinkler/CompositeProgressBar.h
+	source/Crinkler/ConsoleProgressBar.cpp
+	source/Crinkler/ConsoleProgressBar.h
+	source/Crinkler/Crinkler.cpp
+	source/Crinkler/Crinkler.h
+	source/Crinkler/EmpiricalHunkSorter.cpp
+	source/Crinkler/EmpiricalHunkSorter.h
+	source/Crinkler/ExplicitHunkSorter.cpp
+	source/Crinkler/ExplicitHunkSorter.h
+	source/Crinkler/Export.cpp
+	source/Crinkler/Export.h
+	source/Crinkler/Fix.cpp
+	source/Crinkler/Fix.h
+	source/Crinkler/HeuristicHunkSorter.cpp
+	source/Crinkler/HeuristicHunkSorter.h
+	source/Crinkler/HtmlReport.cpp
+	source/Crinkler/HtmlReport.h
+	source/Crinkler/Hunk.cpp
+	source/Crinkler/Hunk.h
+	source/Crinkler/HunkList.cpp
+	source/Crinkler/HunkList.h
+	source/Crinkler/HunkLoader.cpp
+	source/Crinkler/HunkLoader.h
+	source/Crinkler/ImportHandler.cpp
+	source/Crinkler/ImportHandler.h
+	source/Crinkler/LTCGLoader.cpp
+	source/Crinkler/LTCGLoader.h
+	source/Crinkler/Log.cpp
+	source/Crinkler/Log.h
+	source/Crinkler/MemoryFile.cpp
+	source/Crinkler/MemoryFile.h
+	source/Crinkler/MiniDump.cpp
+	source/Crinkler/MiniDump.h
+	source/Crinkler/MultiLoader.cpp
+	source/Crinkler/MultiLoader.h
+	source/Crinkler/NameMangling.cpp
+	source/Crinkler/NameMangling.h
+	source/Crinkler/ProgressBar.h
+	source/Crinkler/Reuse.cpp
+	source/Crinkler/Reuse.h
+	source/Crinkler/StringMisc.cpp
+	source/Crinkler/StringMisc.h
+	source/Crinkler/Symbol.cpp
+	source/Crinkler/Symbol.h
+	source/Crinkler/Transform.cpp
+	source/Crinkler/Transform.h
+	# source/Crinkler/WindowProgressBar.cpp
+	# source/Crinkler/WindowProgressBar.h
+	source/Crinkler/data.h
+	source/Crinkler/known_dll_exports.dat
+	source/Crinkler/main.cpp
+	source/Crinkler/misc.cpp
+	source/Crinkler/misc.h
+	source/Crinkler/modules
+	source/Crinkler/resource.h
+)

@@ -4,7 +4,12 @@
 
 #include <set>
 #include <ctime>
+#include <cstring>
+#include <climits>
+
+#ifdef WIN32
 #include <ppl.h>
+#endif
 
 #include "HunkList.h"
 #include "Hunk.h"
@@ -21,6 +26,15 @@
 #include "HtmlReport.h"
 #include "NameMangling.h"
 #include "MemoryFile.h"
+
+#ifndef WIN32
+#define IMAGE_SUBSYSTEM_WINDOWS_GUI 2
+#define IMAGE_SUBSYSTEM_WINDOWS_CUI 1
+static inline int fopen_s(FILE **out, const char* filename, const char *mode) {
+	*out = fopen(filename, mode);
+	return *out == nullptr;
+}
+#endif
 
 using namespace std;
 
@@ -463,6 +477,9 @@ void Crinkler::SetHeaderConstants(Hunk* header, Hunk* phase1, int hashsize, int 
 }
 
 void Crinkler::Recompress(const char* input_filename, const char* output_filename) {
+#ifndef WIN32
+	// not supported
+#else
 	MemoryFile file(input_filename);
 	unsigned char* indata = (unsigned char*)file.GetPtr();
 
@@ -776,7 +793,7 @@ void Crinkler::Recompress(const char* input_filename, const char* output_filenam
 		// Old calltrans code - convert to new
 		unsigned int ncalls = rawdata[5];
 		rawdata[0] = 0x5F; // POP EDI
-		rawdata[1] = 0xB9; // MOV ECX, DWORD
+		rawdata[1] = 0xB9; // MOV ECX, uint32_t
 		*((unsigned int *)&rawdata[2]) = ncalls;
 		printf("Call transformation code successfully patched.\n");
 		import_offset = 24;
@@ -1033,8 +1050,8 @@ void Crinkler::Recompress(const char* input_filename, const char* output_filenam
 
 	if(is_compatibility_header)
 	{	// Copy hashes from old header
-		DWORD* new_header_ptr = (DWORD*)header->GetPtr();
-		DWORD* old_header_ptr = (DWORD*)indata;
+		uint32_t* new_header_ptr = (uint32_t*)header->GetPtr();
+		uint32_t* old_header_ptr = (uint32_t*)indata;
 
 		for(int i = 0; i < depacker_start / 4; i++) {
 			if(new_header_ptr[i] == 'HSAH')
@@ -1087,6 +1104,7 @@ void Crinkler::Recompress(const char* input_filename, const char* output_filenam
 
 	delete phase1;
 	delete phase2;
+#endif
 }
 
 Hunk* Crinkler::CreateDynamicInitializerHunk()
@@ -1329,7 +1347,12 @@ void Crinkler::Link(const char* filename) {
 			if (m_hunktries > 0)
 			{
 				int target_size1, target_size2;
-				EmpiricalHunkSorter::SortHunkList(&m_hunkPool, *m_transform, m_modellist1, m_modellist2, m_modellist1k, CRINKLER_BASEPROB, m_saturate != 0, m_hunktries, m_showProgressBar ? &m_windowBar : NULL, m_useTinyHeader, &target_size1, &target_size2);
+				EmpiricalHunkSorter::SortHunkList(&m_hunkPool, *m_transform, m_modellist1, m_modellist2, m_modellist1k, CRINKLER_BASEPROB, m_saturate != 0, m_hunktries,
+#ifdef WIN32
+						m_showProgressBar ? &m_windowBar :
+#endif
+						NULL,
+						m_useTinyHeader, &target_size1, &target_size2);
 				delete phase1;
 				delete phase1Untransformed;
 				m_transform->LinkAndTransform(&m_hunkPool, importSymbol, CRINKLER_CODEBASE, phase1, &phase1Untransformed, &splittingPoint, true);
@@ -1528,8 +1551,10 @@ void Crinkler::PrintOptions(FILE *out) {
 
 void Crinkler::InitProgressBar() {
 	m_progressBar.AddProgressBar(&m_consoleBar);
+#ifdef WIN32
 	if(m_showProgressBar)
 		m_progressBar.AddProgressBar(&m_windowBar);
+#endif
 	m_progressBar.Init();
 }
 

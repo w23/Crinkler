@@ -5,6 +5,7 @@
 #include "HunkList.h"
 #include "Symbol.h"
 #include "Log.h"
+#include <cstring>
 
 Hunk* CallTransform::GetDetransformer() {
 	CoffObjectLoader loader;

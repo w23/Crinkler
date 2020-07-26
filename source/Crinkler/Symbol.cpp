@@ -1,6 +1,9 @@
 #include "Symbol.h"
+
+#ifdef WIN32
 #include <windows.h>
 #include <dbghelp.h>
+#endif
 
 using namespace std;
 

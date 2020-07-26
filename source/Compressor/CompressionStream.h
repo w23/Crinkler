@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#include "AritCode.h"
+#include "aritcode.h"
 #include "ModelList.h"
 
 struct HashBits {

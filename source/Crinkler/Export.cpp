@@ -5,6 +5,7 @@
 
 #include <set>
 #include <algorithm>
+#include <cstring>
 
 Export::Export(const std::string name, const std::string symbol)
 	: m_name(std::move(name)), m_symbol(std::move(symbol)), m_value(0)

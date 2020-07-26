@@ -5,7 +5,7 @@
 #include <cstdio>
 
 class Compressor;
-enum CompressionType;
+enum CompressionType {COMPRESSION_INSTANT, COMPRESSION_FAST, COMPRESSION_SLOW, COMPRESSION_VERYSLOW};
 
 static const int MAX_MODELS = 256;
 
